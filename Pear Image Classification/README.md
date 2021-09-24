@@ -1,10 +1,10 @@
-### Package Used 
+### ●Package Used 
 ```
 library(tidyverse)
 library(keras)
 ```
 
-### Copying images to training and test directories
+### ●Copying images to training and test directories
 ```
 original_dataset_dir <- "C:/제이제이유/testpear"
 base_dir <- "C:/pears"
@@ -72,7 +72,7 @@ cat("total test pear images",length(list.files(test_pear_dir)),"\n")
 cat("total test rottenpear images",length(list.files(test_rottenpear_dir)),"\n")
 ```
 
-### Building network
+### ●Building network
 ```
 model <- keras_model_sequential() %>%
   layer_conv_2d(input_shape = c(150, 150, 3), filters = 16, kernel_size = c(3, 3), activation = 'relu') %>%
@@ -83,7 +83,7 @@ model <- keras_model_sequential() %>%
   layer_max_pooling_2d(pool_size = c(2, 2))
 ```
 
-### Adding a classifier to the convnet
+### ●Adding a classifier to the convnet
 ```
 model <- model %>%
   layer_flatten() %>%
@@ -91,7 +91,7 @@ model <- model %>%
   layer_dense(units = 1, activation ='sigmoid')
 ```
 
-### Compile: Configuring a Keras model for training
+### ●Compile: Configuring a Keras model for training
 ```
 model%>%compile(
   loss="binary_crossentropy",
@@ -100,7 +100,7 @@ model%>%compile(
 )
 ```
 
-### Data preprocessing
+### ●Data preprocessing
 ```
 train_datagen <- image_data_generator(rescale=1/255)
 validation_datagen <- image_data_generator(rescale=1/255)
@@ -122,7 +122,7 @@ validation_generator <- flow_images_from_directory(
 )
 ```
 
-### Training the Neural Network
+### ●Training the Neural Network
 ```
 histroy <- model %>% fit_generator(
   train_generator,
@@ -135,8 +135,8 @@ histroy <- model %>% fit_generator(
 model%>%save_model_hdf5("pears1.h5")
 ```
 
-### Generating predictions on new data/our own data
-#### Implementing a data generator for the test images
+### ●Generating predictions on new data/our own data
+#### -Implementing a data generator for the test images
 ```
 fun_dir <- file.path(base_dir, "my_test_images")
 dir.create(fun_dir)
@@ -183,7 +183,7 @@ test_generator <- flow_images_from_directory(
 
 ```
 
-#### Generating predictions for the test samples from a data generator
+#### -Generating predictions for the test samples from a data generator
 ```
 predictions <- model %>% predict_generator(
   steps = 1,
