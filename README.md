@@ -17,4 +17,4 @@
 #### ⠀
 ## Model Evaluation
 ![image](https://user-images.githubusercontent.com/80669371/134610546-3ad7c1af-c7d8-4fbd-b5bb-d9c24c4360b6.png)
-
+#### 정확도: 88.6%
