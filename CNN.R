@@ -1,11 +1,8 @@
-### Package Used 
-```
+#Package Used 
 library(tidyverse)
 library(keras)
-```
 
-### Copying images to training and test directories
-```
+#Copying images to training and test directories
 original_dataset_dir <- "C:/제이제이유/testpear"
 base_dir <- "C:/pears"
 dir.create(base_dir)
@@ -39,7 +36,6 @@ dir.create(test_rottenpear_dir)
 a <- sample(x=1:2862,size=2000,replace=F)
 b <- sample(x=1:2866,size=2000,replace=F) 
 
-#사진들을 넣어주기 위한 코드
 fnames <- paste0("pear (", a[1:1000],").JPG")
 file.copy(file.path(original_dataset_dir,fnames),
           file.path(train_pear_dir))
@@ -70,10 +66,8 @@ cat("total validation pear images", length(list.files(validation_pear_dir)),"\n"
 cat("total validation rottenpear images", length(list.files(validation_rottenpear_dir)),"\n")
 cat("total test pear images",length(list.files(test_pear_dir)),"\n")
 cat("total test rottenpear images",length(list.files(test_rottenpear_dir)),"\n")
-```
 
-### Building network
-```
+#Building network
 model <- keras_model_sequential() %>%
   layer_conv_2d(input_shape = c(150, 150, 3), filters = 16, kernel_size = c(3, 3), activation = 'relu') %>%
   layer_max_pooling_2d(pool_size = c(2, 2)) %>%
@@ -81,27 +75,21 @@ model <- keras_model_sequential() %>%
   layer_max_pooling_2d(pool_size = c(2, 2)) %>%
   layer_conv_2d(filters = 64, kernel_size = c(3, 3), activation = 'relu') %>%
   layer_max_pooling_2d(pool_size = c(2, 2))
-```
 
-### Adding a classifier to the convnet
-```
+#Adding a classifier to the convnet
 model <- model %>%
   layer_flatten() %>%
   layer_dense(units = 512, activation = 'relu') %>%
   layer_dense(units = 1, activation ='sigmoid')
-```
 
-### Compile: Configuring a Keras model for training
-```
+#Compile: Configuring a Keras model for training
 model%>%compile(
   loss="binary_crossentropy",
   optimizer = optimizer_rmsprop(learning_rate = 1e-4),
   metrics=c("acc")
 )
-```
 
-### Data preprocessing
-```
+#Data preprocessing
 train_datagen <- image_data_generator(rescale=1/255)
 validation_datagen <- image_data_generator(rescale=1/255)
 
@@ -120,11 +108,9 @@ validation_generator <- flow_images_from_directory(
   batch_size = 20,
   class_mode = "binary"
 )
-```
 
-### Training the Neural Network
-#### Implementing a data generator for the test images
-```
+#Training the Neural Network
+##Implementing a data generator for the test images
 histroy <- model %>% fit_generator(
   train_generator,
   steps_per_epoch = 100,
@@ -134,10 +120,8 @@ histroy <- model %>% fit_generator(
 )
 
 model%>%save_model_hdf5("pears1.h5")
-```
 
-### Generating predictions on new data/our own data
-```
+##Generating predictions on new data/our own data
 fun_dir <- file.path(base_dir, "my_test_images")
 dir.create(fun_dir)
 
@@ -181,10 +165,7 @@ test_generator <- flow_images_from_directory(
   shuffle = F
 )
 
-```
-
-#### Generating predictions for the test samples from a data generator
-```
+#Generating predictions for the test samples from a data generator
 predictions <- model %>% predict_generator(
   steps = 1,
   generator = test_generator,
@@ -197,4 +178,3 @@ pred_results <- as.data.frame(cbind(image_labels, predictions)) %>%
   rename("prediction" = 2) %>%
   mutate("predicted_class" = if_else(prediction>0.5,print("rottenpear"),print("pear")),
          prediction = as.double(prediction))
-```
