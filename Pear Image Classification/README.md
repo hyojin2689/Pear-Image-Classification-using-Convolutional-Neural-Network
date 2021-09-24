@@ -123,7 +123,6 @@ validation_generator <- flow_images_from_directory(
 ```
 
 ### Training the Neural Network
-#### Implementing a data generator for the test images
 ```
 histroy <- model %>% fit_generator(
   train_generator,
@@ -137,6 +136,7 @@ model%>%save_model_hdf5("pears1.h5")
 ```
 
 ### Generating predictions on new data/our own data
+#### Implementing a data generator for the test images
 ```
 fun_dir <- file.path(base_dir, "my_test_images")
 dir.create(fun_dir)
