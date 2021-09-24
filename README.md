@@ -6,9 +6,9 @@
 #### ●Validation : 500장
 #### ●Test : 500장
 #### ⠀
-## CNN Model Architecture 
-#### :Convolutional Neural Networks are state of the art models for Image Classification, Segmentation, Object Detection and many other image processing tasks.
-#### :CNN이란, Convolutional Neural Network의 약자로 일반 Deep Neural Network에서 이미지나 영상과 같은 데이터를 처리할 때 발생하는 문제점들을 보완한 방법
+## CNN(Convolutional Neural Network) Model Architecture 
+#### :State of the art models for Image Classification, Segmentation, Object Detection and many other image processing tasks.
+#### :일반 Deep Neural Network에서 이미지나 영상과 같은 데이터를 처리할 때 발생하는 문제점들을 보완한 방법
 ![image](https://user-images.githubusercontent.com/80669371/134610270-de1233a4-ff16-485b-88fd-2ef9168ab457.png)
 #### ⠀
 ## Model Training
